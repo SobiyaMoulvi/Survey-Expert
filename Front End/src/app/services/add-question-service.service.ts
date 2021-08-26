@@ -4,13 +4,13 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class AddQuestionService {
+export class AddQuestionServiceService {
 
-  baseurl  = "http://localhost:8080"
   constructor(private _http:HttpClient) { }
+  baseurl  = "http://localhost:8080"
 
-  public addQuestion(question: any){
+  public addQuestion(question){
     return this._http.post(`${this.baseurl}/question/addQuestion`,question);
+
   }
-  
 }

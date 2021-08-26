@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { survey } from 'src/model/survey';
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
+
+import baseUrl from './base-url';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +12,13 @@ import { Observable, throwError } from 'rxjs';
 
 export class ViewSurveysService {
 
-  private url: string = "https://localhost:8080/survey/allSurveys"
+  // url= "http://localhost:8080/survey/allSurveys"
 
-  constructor(private http:HttpClient) { }
+  constructor(private _http:HttpClient) { }
 
-  public getSurveys(){
-    return this.http.get<survey[]>(this.url);
+  public getSurveys(): Observable<any>{
+    console.log("From service");
+    console.log(this._http.get(`${baseUrl}/survey/allSurveys`));
+    return this._http.get(`${baseUrl}/survey/allSurveys`);
   }
 }

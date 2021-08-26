@@ -1,0 +1,54 @@
+<h3>Displaying Question of {{name}}</h3>
+<a [routerLink]="'/dashboard/newQuestion/'+survey_id" mat-raised-button color="primary" class=" mx-2"> Add Question </a>
+<br><br>
+<mat-card *ngFor="let q of questions; let i = index" class="mt20">
+    <mat-card-content>
+      <p>
+        <b> Q {{ i + 1 }})</b>
+        <span class="ml20" [innerHTML]="q.question_text"></span>
+      </p>
+      <div class="container-fluid">
+        <div class="row">
+            <div *ngIf="q.answer_type=='textbox'" class="name">
+                <input 
+                    name="input_text"
+                    matInput required>
+            </div>
+            <div *ngIf="q.answer_type=='checkbox'" class="name">
+                <div class="row">
+                    <div  class="w100 example-radio-group">
+                        <mat-checkbox class="example-margin" >{{q.option1}}</mat-checkbox><br>
+                        <mat-checkbox class="example-margin" *ngIf="q.option2!=''">{{q.option2}}</mat-checkbox><br>
+                        <mat-checkbox class="example-margin" *ngIf="q.option3!=''">{{q.option3}}</mat-checkbox><br>
+                        <mat-checkbox class="example-margin" *ngIf="q.option4!=''">{{q.option4}}</mat-checkbox><br>
+
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="q.answer_type=='radio'"  class="name">
+                <div class="row">
+                    <div  class="w100">
+                            <mat-radio-group aria-label="Select an option" class="example-radio-group">
+                                <mat-radio-button value="1">{{q.option1}}</mat-radio-button><br>
+                                <mat-radio-button value="2" *ngIf="q.option2!=''">{{q.option2}}</mat-radio-button><br>
+                                
+                                <mat-radio-button value="3" *ngIf="q.option3!=''">{{q.option3}}</mat-radio-button><br>
+                                <mat-radio-button value="4" *ngIf="q.option4!=''">{{q.option4}}</mat-radio-button>
+                            </mat-radio-group>  
+                    </div>   
+                </div>
+            </div>
+            <div *ngIf="q.answer_type=='dropdown'"  class="name">
+            <div class="row">
+                <div  class="w100">
+                    <select class="form-select">
+                        <option value="textbox">{{q.option1}}</option>
+                        <option value="radio"> {{q.option2}}</option>
+                        <option value="checkbox" *ngIf="q.option3!=''">{{q.option3}}</option>
+                        <option value="dropdown" *ngIf="q.option4!=''">{{q.option4}}</option>
+                      </select>
+                </div>
+            </div>
+            </div>
+      </div>
+      </div>

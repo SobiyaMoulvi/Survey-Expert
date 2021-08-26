@@ -1,0 +1,89 @@
+<app-header></app-header>
+<div class="container">
+     <div class="row mt20">
+         <div class="col-md-12">
+            <mat-card>
+                <h1>Adding Question to Survey</h1>
+                <mat-card-content>
+                    <form (ngSubmit)="addQuestion()">
+                        <mat-form-field appearance="fill" class="w100">
+                            <mat-label>Write question content</mat-label>
+                            <textarea matInput
+                            [(ngModel)]="question.question_text"
+                            name="content"
+                            rows="5" cols="40" placeholder="Write Here..."></textarea>
+                        </mat-form-field>
+<!--                         Option Type Selection -->
+                        <mat-form-field appearance="fill" class="w100">
+                            <mat-label>Choose option type</mat-label>
+                            <mat-select [(ngModel)]="question.answer_type" name="type">
+                                <mat-option value="textbox">Textbox</mat-option>
+                                <mat-option value="checkbox">Checkbox</mat-option>
+                                <mat-option value="radio">Radio</mat-option>
+                                <mat-option value="dropdown">Drop-Down</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="question.answer_type=='textbox'" class="name"></div>
+                        <div *ngIf="question.answer_type=='checkbox' || question.answer_type=='radio' || question.answer_type=='dropdown' " class="name">
+
+                          <!-- Options -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field class="w100">
+                                    <mat-label>
+                                        Enter Option 1
+                                    </mat-label>
+                                    <input 
+                                    [(ngModel)]="question.option1"
+                                    name="option1"
+                                    type="text" matInput/>
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-6">
+                                <mat-form-field class="w100">
+                                    <mat-label>
+                                        Enter Option 2
+                                    </mat-label>
+                                    <input 
+                                    [(ngModel)]="question.option2"
+                                    name="option2"
+                                    type="text" matInput/>
+                                </mat-form-field>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field class="w100">
+                                    <mat-label>
+                                        Enter Option 3
+                                    </mat-label>
+                                    <input 
+                                    [(ngModel)]="question.option3"
+                                    name="option3"
+                                    type="text" matInput/>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field class="w100">
+                                    <mat-label>
+                                        Enter Option 4
+                                    </mat-label>
+                                    <input 
+                                    [(ngModel)]="question.option4"
+                                    name="option4"
+                                    type="text" matInput/>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="container text-center">
+                            <button mat-raised-button style="background-color: orangered;">Add</button>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+         </div>
+     </div>
+ </div>
+ {{question | json}}

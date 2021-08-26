@@ -12,6 +12,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSelectModule} from '@angular/material/select';
+import {MatListModule} from '@angular/material/list';
+import {MatRadioModule} from '@angular/material/radio';
+import { ClipboardModule } from 'ngx-clipboard';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,6 +45,12 @@ import { authInterceptorProviders } from 'src/services/auth.interceptor';
 //import { Observable } from 'rxjs';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { AddSurveyComponent } from './add-survey/add-survey.component';
+import { AddnewQuestionComponent } from './addnew-question/addnew-question.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { DisplayQuestionComponent } from './display-question/display-question.component';
+import { GiveSurveyComponent } from './give-survey/give-survey.component';
 
 @NgModule({
   declarations: [
@@ -64,11 +75,19 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     UserLoginComponent,
     //DashboardComponent,
     SignupComponent,
+    AddSurveyComponent,
+    AddnewQuestionComponent,
+    SidebarComponent,
+    AdminDashboardComponent,
+    DisplayQuestionComponent,
+    GiveSurveyComponent,
   
   ],
   imports: [
     BrowserModule,
     // Observable,
+    MatRadioModule,
+    ClipboardModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -84,6 +103,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     HttpClientModule,
     MatSnackBarModule,
     MatToolbarModule,
+    MatSelectModule,
+    MatListModule
   ],
   
   providers: [authInterceptorProviders],

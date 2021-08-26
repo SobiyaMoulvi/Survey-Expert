@@ -1,169 +1,98 @@
-<!-- <app-navbar></app-navbar>
-<div class="container">
-     <div class="row mt20">
-         <div class="col-md-12">
-            <mat-card>
-                <h1>Adding Question to Survey</h1>
-                <mat-card-content>
-                    <form>
-                        <mat-form-field appearance="fill" class="w100">
-                            <mat-label>Write question content</mat-label>
-                            <textarea matInput
-                            [(ngModel)]="question.content"
-                            name="content"
-                            rows="5" cols="40" placeholder="Write Here..."></textarea>
-                        </mat-form-field>
-
-
-                        <mat-form-field appearance="fill" class="w100">
-                            <mat-label>Choose option type</mat-label>
-                            <mat-select [(ngModel)]="question.type" name="type">
-                                <mat-option value="textbox">Textbox</mat-option>
-                                <mat-option value="checkbox">Checkbox</mat-option>
-                                <mat-option value="radio">Radio</mat-option>
-                                <mat-option value="dropdown">Drop-Down</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <mat-form-field class="w100">
-                                    <mat-label>
-                                        Enter Option 1
-                                    </mat-label>
-                                    <input 
-                                    [(ngModel)]="question.option1"
-                                    name="option1"
-                                    type="text" matInput/>
-                                </mat-form-field>
-                              </div>
-                              <div class="col-md-6">
-                                <mat-form-field class="w100">
-                                    <mat-label>
-                                        Enter Option 2
-                                    </mat-label>
-                                    <input 
-                                    [(ngModel)]="question.option2"
-                                    name="option2"
-                                    type="text" matInput/>
-                                </mat-form-field>
-                              </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md-6">
-                                <mat-form-field class="w100">
-                                    <mat-label>
-                                        Enter Option 3
-                                    </mat-label>
-                                    <input 
-                                    [(ngModel)]="question.option3"
-                                    name="option3"
-                                    type="text" matInput/>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-6">
-                                <mat-form-field class="w100">
-                                    <mat-label>
-                                        Enter Option 4
-                                    </mat-label>
-                                    <input 
-                                    [(ngModel)]="question.option4"
-                                    name="option4"
-                                    type="text" matInput/>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="container text-center">
-                            <button mat-raised-button style="background-color: orangered;">Add</button>
-                        </div>
-                    </form>
-                </mat-card-content>
-            </mat-card>
-         </div>
-     </div>
- </div>
- {{question | json}}
- -->
-
-
-
 
  <app-navbar></app-navbar>
  
  <div class="container mt-4">
     <div class="card">
       <h4 class="card-header">Enter Your Survey Details !</h4>
-      <div class="card-body">
-        <form (ngSubmit)="onsubmit()">
-          <div class="container">
-            <div class="mb-3">
-              <label for="question" class="form-label">Enter Survey Name</label>
-              <input type="text" class="form-control" id="surveyName" aria-describedby="emailHelp">
+        <div class="card-body">
+          <form [formGroup]="myForm" (ngSubmit)="onSubmit()" #f="ngForm">
+
+
+            <div class="container">
+              <div class="mb-3 form-group">
+                <label for="surveyName" class="form-label">Enter Survey Name</label>
+                <input type="text" class="form-control" id="surveyName" formControlName="surveyName"
+                  required>
+              </div>
+
+            <div class="mb-3 form-group">
+              <label for="surveyDesc" class="form-label">Enter Survey Description</label>
+              <input type="textarea" class="form-control" id="surveyDesc" formControlName="surveyName"
+              required>
             </div>
 
-            <div class="mb-3">
-              <label for="question" class="form-label">Enter Survey Description</label>
-              <input type="textarea" class="form-control" id="surveyDesc" aria-describedby="emailHelp">
-            </div>
+            <div formArrayName="questionList">
+              <div class="form-row" *ngFor="let question of myForm.get('questionList')['controls']; let i=index">
+                <fieldset>
+                <div class="card my-2">
+                  <div class="card-body">
+                    <h6 class="card-header">Question {{i+1}}</h6>
 
-
-            <div class="form-row" *ngFor="let obj of qArray; let i=index">
-              <div class="card my-2">
-                <div class="card-body">
-                  <h6 class="card-header">Question {{i+1}}</h6>  
-                      <div class="row mt-4 mx-2">
-                        
-                        <div class="form-group col-md-4">
-                          <label>Question</label>
-                          <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.questionText">
-                        </div>
-
-                        <div class="form-group col-md-2" >
-                          <form-field>
-                            <label>Question Type</label>
-                              <select class="form-select">
-                                <option value="textbox">Text Box</option>
-                                <option value="radio">Radio Buttons</option>
-                                <option value="checkbox">Check Box</option>
-                                <option value="dropdown">Drop Down</option>
-                                <option value="textarea">Text Area</option>
-                              </select>
-                          </form-field>
-                        </div>
-                      </div> 
-              
-                      <br>
-              
-                      <div class="form-group col-md-2 ms-4">
-                        <div class="row mt-4 me-2">
-                            <div class="form-row" *ngFor="let opt of qArray; let j=index">
-                                <label>Options</label>
-                                <input type="text" class="form-control" name="name{{j}}" [(ngModel)]="opt.questionId">
-                                <div (click)="addForm()" class="btn btn-success btn-sm">Add Option</div> 
+                      <div [formGroupName]="i"> 
+                        <div class="form-inline">
+                          <div class="row mt-4 mx-2">
+                            <div class="form-group col-md-4">
+                              <label for="question" class="form-label">Question</label>
+                              <input type="text" class="form-control" id="question" name="type" formControlName="question" 
+                               required>
                             </div>
+
+
+                          <div class="col-md-2" >
+                            <form-field>
+                              <label for="questionType" class="form-label">Question Type</label>
+                                <select class="form-select">
+                                  <option value="textbox">Text Box</option>
+                                  <option value="radio">Radio Buttons</option>
+                                  <option value="checkbox">Check Box</option>
+                                  <option value="dropdown">Drop Down</option>
+                                  <option value="textarea">Text Area</option>
+                                </select>
+                            </form-field>
+                          </div>
                           
-
-                            <div class="form-group col-md-2 position" *ngIf="i!=0">
-                              <span (click)="removeForm(i)" class="btn btn-danger btn-sm position-absolute top-0 end-0 ">Delete</span> 
-                            </div>
-                        </div>
+                            <button (click)="addNewoption(question.controls.optionList)" class="btn btn-success btn-sm col-md-4">Add Option</button>
+                          </div>
+                        </div> 
                       </div>
 
-
+                      <div class="form-inline">
+                        <div class="form-group">
+                          <div formArrayName="optionList">
+                            <div *ngFor="let lines of question.get('optionList').controls; let j=index">
+                              <div [formGroupName]="j">
+                                <div class="form-group col-md-4">
+                                  <label for="question" class="form-label">Option {{j+1}}</label>
+                                  <input type="text" class="form-control" id="question" name="type" formControlName="question" 
+                                     required>
+                                     <button class="btn btn-danger btn-sm" (click)="deleteoption(question.controls.optionList, j)">Delete Option</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                   
+                        
+                    <br>
+                
           
-                  <div class="form-group col-md-2 position" *ngIf="i!=0">
-                    <span (click)="removeForm(i)" class="btn btn-danger btn-sm position-absolute top-0 end-0 ">Delete</span> 
-                  </div>
+                    <!-- <div class="form-group col-md-2 position" *ngIf="i!=0"> -->
+                      <button (click)="deletequestion(i)" class="btn btn-danger btn-sm position-absolute top-0 end-0 ">Delete</button> 
+                    <!-- </div> -->
 
+                  </div>
                 </div>
-              </div>
+              </fieldset>
             </div>
+          </div>
+
+
+
         </div>
 
         <br>
-        <span (click)="addForm()" class="btn btn-success ">Add Question</span> 
+        <span (click)="addNewquestion()" class="btn btn-success ">Add Question</span> 
           &nbsp;  
         <button class="btn btn-primary">Submit</button>
       
@@ -171,4 +100,6 @@
 
     </div>
   </div>
+
 </div>
+

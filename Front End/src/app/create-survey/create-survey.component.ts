@@ -1,30 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { AddSurveyService } from 'src/services/add-survey.service';
 import Swal from 'sweetalert2';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-create-survey',
   templateUrl: './create-survey.component.html',
   styleUrls: ['./create-survey.component.css']
 })
 export class CreateSurveyComponent implements OnInit {
-
-  constructor(private _survey:AddSurveyService) { }
+  sid;
+  constructor(private _survey:AddSurveyService,private snack:MatSnackBar, private _route:ActivatedRoute) { }
   surveyData ={
+    
     name :'',
     description :'',
     link :'',
-    //createDate :'',
     lastEditedBy :'',
     status :'',
-    //survey :null,
   }
   ngOnInit(): void {
+    this.sid=this._route.snapshot.params.sid;
+    //alert(this.sid)
   }
 
   //Add Survey
   addSurvey(){
     console.log(this.surveyData);
 
+    if(this.surveyData.name == '' || this.surveyData.name == null){
+      // alert('username is required!');
+      this.snack.open(" Name is required!", 'OK', {duration:3000, verticalPosition:'top', horizontalPosition:'center'});
+      return;
+    }
+    if(this.surveyData.description == '' || this.surveyData.description == null){
+      // alert('username is required!');
+      this.snack.open(" Description is required!", 'OK', {duration:3000, verticalPosition:'top', horizontalPosition:'center'});
+      return;
+    }
     //call server
     this._survey.addSurvey(this.surveyData).subscribe(
     (success)=>{

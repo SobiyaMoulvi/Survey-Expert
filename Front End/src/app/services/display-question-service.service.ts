@@ -4,13 +4,13 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class AddQuestionService {
-
+export class DisplayQuestionServiceService {
   baseurl  = "http://localhost:8080"
+
   constructor(private _http:HttpClient) { }
 
-  public addQuestion(question: any){
-    return this._http.post(`${this.baseurl}/question/addQuestion`,question);
+  displayQuestion(survey_id){
+    return this._http.get(`${this.baseurl}/question/survey/${survey_id}`);
+
   }
-  
 }
